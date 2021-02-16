@@ -1,0 +1,32 @@
+{
+  "name": "Amazing Shop",
+  "app_name": "Amazing Shop",
+  "short_name": "AmazingShop",
+  "description": "A Progressive Web App for amazing Shopping Experience",
+  "start_url": "./",
+  "theme_color": "#4a90e2",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "icons/Icon-180.png",
+      "type": "image/png",
+      "sizes": "180x180",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/Icon-192.png",
+      "type": "image/png",
+      "sizes": "192x192",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "icons/Icon-512.png",
+      "type": "image/png",
+      "sizes": "512x512",
+      "purpose": "maskable any"
+    }
+  ]
+}
