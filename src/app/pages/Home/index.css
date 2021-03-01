@@ -1,0 +1,26 @@
+
+.main-banner-content {
+    padding: 2rem;
+    background: #ffffff;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+.main-banner-title {
+    font-weight: 500;
+    color: rgb(149, 10, 241) !important;
+}
+@media (max-width: 992px) and (min-width: 769px) {
+    .main-banner-image {
+        height: 250px;
+        justify-self: center;
+        align-self: center;
+    }
+}
+@media (max-width: 768px){
+    .main-banner-content {
+        display: block;
+    }
+    .main-banner-image {
+        display: none;
+    }
+}

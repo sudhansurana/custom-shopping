@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFound component 1`] = `
+<div
+  className="starter-template text-center py-5 px-3"
+>
+  <header>
+    <h2>
+      Page Not Found 
+    </h2>
+  </header>
+  <footer>
+    <a
+      href="/"
+      onClick={[Function]}
+    >
+      Back to Home
+    </a>
+  </footer>
+</div>
+`;

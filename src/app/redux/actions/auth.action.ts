@@ -21,7 +21,7 @@ export function onLogout () {
 }
 
 export function login (user: any) {
-  return function (dispatch: any) {
+  return async function (dispatch: any) {
     dispatch(showLoader())
     return AuthApi.login(user)
       .then((userData: any) => {
@@ -36,11 +36,14 @@ export function login (user: any) {
 }
 
 export function getProfile (email: string) {
-  return function (dispatch: any) {
+  return async function (dispatch: any) {
     dispatch(showLoader())
     return AuthApi.profile(email)
-      .then(profile => {
-        dispatch(loginSuccess(profile.data))
+      .then(res => {
+        console.log('getProfile->res', res)
+        const profile = res.data?.[0]
+        console.log('getProfile->profile', profile)
+        dispatch(profileSuccess(profile))
         dispatch(hideLoader())
       })
       .catch(error => {
@@ -50,7 +53,12 @@ export function getProfile (email: string) {
 }
 
 export function logout() {
-  return function(dispatch: any) {
-    dispatch(onLogout)
+  return async function(dispatch: any) {
+    return new Promise((resolve: any, reject: any) => {
+      dispatch(onLogout())
+      setTimeout(() => {
+        resolve(true)
+      }, 100)
+    })    
   }
 }

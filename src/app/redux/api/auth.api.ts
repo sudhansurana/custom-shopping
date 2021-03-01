@@ -8,7 +8,7 @@ export default class AuthApi {
 	}
 
 	static profile(email: string) {
-		const request = axios.get(`${BASE_URL}users?userName=${email}`)
+		const request = axios.get(`${BASE_URL}profiles?userName=${email}`)
 		return request;
 	}
 }

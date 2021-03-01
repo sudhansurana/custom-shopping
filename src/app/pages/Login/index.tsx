@@ -1,96 +1,106 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import { Button, Form, InputGroup, FormControl } from 'react-bootstrap'
 
 import { Link, useHistory } from 'react-router-dom'
-import { connect } from 'react-redux'
-import {bindActionCreators} from 'redux';
+import { connect, useDispatch, useSelector } from 'react-redux'
+import { bindActionCreators } from 'redux';
 
-import * as authActions from '../../redux/actions'
+import * as actions from '../../redux/actions'
+import './index.css'
+import { IAuthState } from '../../redux/reducers/auth.reducer';
+
+interface IState {
+  authReducer?: IAuthState
+}
 
 const Login = (props: any) => {
+  
+  const dispatch = useDispatch();
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
   const [submitted, setSubmitted] = useState(false)
   const history = useHistory()
+  const inputEl = useRef(null);
+  const user = useSelector((state: IState) => state.authReducer?.user);
 
-  const {user, isLoading} = props;
+  const { isLoading } = props;
 
   const handleSubmit = (e: any) => {
     e.preventDefault()
-    const { actions } = props
-    actions.login({username, password}).then((res: any) => {
-        history.push(`/profile`)
-    });
+    const action: any = dispatch(actions.login({ username, password }))
+    console.log('action', action)
+    action.then((res: any) => {
+      console.log('res', res)
+      history.push(`/profile`)
+    })
   }
-  if(isLoading) {
-      return (<label>Loading...</label>)
+  if (isLoading) {
+    return (<label>Loading...</label>)
   }
+  /* useEffect(() => {
+    console.log('useEffect->', inputEl.current)
+    if(inputEl.current) {
+      inputEl.current.focus();
+    }    
+  },[]) */
   return (
-    <div className='container-fluid text-center'>
-      <main className='form-signin'>
-        <div className='col-md-6 col-md-offset-3'>
-          <h2>Login</h2>
-          <form name='form' onSubmit={handleSubmit}>
-            <div
-              className={
-                'form-group' + (submitted && !username ? ' has-error' : '')
-              }
-            >
-              <label htmlFor='username'>Username</label>
-              <input
-                type='text'
-                className='form-control'
-                name='username'
-                value={username}
-                onChange={evt => {
-                  setUsername(evt.target.value)
-                }}
-              />
-              {submitted && !username && (
-                <div className='help-block'>Username is required</div>
-              )}
-            </div>
-            <div
-              className={
-                'form-group' + (submitted && !password ? ' has-error' : '')
-              }
-            >
-              <label htmlFor='password'>Password</label>
-              <input
-                type='password'
-                className='form-control'
-                name='password'
-                value={password}
-                onChange={evt => {
-                  setPassword(evt.target.value)
-                }}
-              />
-              {submitted && !password && (
-                <div className='help-block'>Password is required</div>
-              )}
-            </div>
-            <div className='form-group'>
-              <button className='btn btn-primary'>Login</button>
-              <Link to='/'>Home</Link>
-            </div>
-          </form>
-        </div>
-      </main>
+    <div className='text-center align-middle p-5'>
+      <div className='form-signin'>
+        <form name='form' className="login-form" onSubmit={handleSubmit}>
+          <h1 className="h3 mb-3 fw-normal">Please sign in</h1>
+          <div
+            className={
+              'form-group' + (submitted && !username ? ' has-error' : '')
+            }
+          >
+            <label htmlFor='username' className="visually-hidden">Username</label>
+            <input
+              ref={inputEl}
+              type='text'
+              className='form-control'
+              name='username'
+              placeholder="Email address" required autoFocus
+              value={username}
+              onChange={evt => {
+                setUsername(evt.target.value)
+              }}
+            />
+            {submitted && !username && (
+              <div className='help-block'>Username is required</div>
+            )}
+          </div>
+          <div
+            className={
+              'form-group' + (submitted && !password ? ' has-error' : '')
+            }
+          >
+            <label htmlFor='password' className="visually-hidden">Password</label>
+            <input
+              type='password'
+              className='form-control'
+              name='password'
+              value={password}
+              placeholder="Password" required autoFocus
+              onChange={evt => {
+                setPassword(evt.target.value)
+              }}
+            />
+            {submitted && !password && (
+              <div className='help-block'>Password is required</div>
+            )}
+          </div>
+          <div className="checkbox mb-3">
+            <label>
+              <input type="checkbox" value="remember-me"></input> Remember me
+            </label>
+          </div>
+          <div className='form-group'>
+            <button className='btn btn-primary w-100'>Login</button>
+          </div>
+        </form>
+      </div>
     </div>
   )
 }
 
-function mapStateToProps (state: any, ownProps: any) {
-  return {
-    user: state.auth.user,
-    isLoading: state.isLoading
-  }
-}
-
-function mapDispatchToProps (dispatch: any) {
-  return {
-    actions: bindActionCreators(authActions, dispatch)
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Login)
+export default Login
