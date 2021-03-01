@@ -4,6 +4,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 In the project directory, you can run:
 
+### `yarn api`
+
+Runs the json api server in port 4200.<br />
+Open [http://localhost:4200](http://localhost:4200) to view it in the browser.
+
 ### `yarn start`
 
 Runs the app in the development mode.<br />
